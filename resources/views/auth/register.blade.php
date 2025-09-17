@@ -52,13 +52,13 @@
         </div>
 
         <x-primary-button class="w-full py-3 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-md transition duration-200">
-                {{ __('Cadastrar') }}
+                {{__('Cadastrar')}}
         </x-primary-button>
 
         <div class="mt-6 text-center">
                 <p class="text-sm text-neutral-400">
                     Ja tem uma conta?
-                    <a href="./login.html" class="text-red-500 hover:text-red-400 font-bold">{{ __('Entrar') }}</a>
+                    <a href="/login" class="text-red-500 hover:text-red-400 font-bold">{{ __('Entrar') }}</a>
                 </p>
             </div>
         
