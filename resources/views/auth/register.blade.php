@@ -57,7 +57,7 @@
 
         <div class="mt-6 text-center">
                 <p class="text-sm text-neutral-400">
-                    Ja tem uma conta?
+                    Já possui uma conta?
                     <a href="/login" class="text-red-500 hover:text-red-400 font-bold">{{ __('Entrar') }}</a>
                 </p>
             </div>

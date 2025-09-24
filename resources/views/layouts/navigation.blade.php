@@ -1,28 +1,34 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<style>
+    .text-true-red {
+        color: #FF0000;
+    }
+</style>
+
+<nav x-data="{ open: false }" class="p-4 fixed w-full z-10 bg-neutral-900 bg-opacity-70 shadow-md">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+    <div class="container mx-auto flex justify-between items-center px-4">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
+                <a href="/" class="text-3xl font-bold tracking-wider">
+                    HIT<span class="text-true-red">N</span>RUN
+                </a>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                <div class="flex space-x-6 items-center">
+                    <ul class="flex space-x-6 items-center">
+                        <li><a href="/" class="text-white hover:text-red-600 text-lg font-medium">Início</a></li>
+                        <li><a href="./news.html" class="text-white hover:text-red-600 text-lg font-medium">Notícias</a></li>
+                        <li><a href="./about.html" class="text-white hover:text-red-600 text-lg font-medium">Sobre Nós</a></li>
+                        <li><a href="{{ route('login') }}" class="text-white hover:text-red-600 text-lg font-medium">Entrar</a></li>
+                    </ul>
                 </div>
-            </div>
+
+            
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="fa-solid fa-circle-user text-2xl cursor-pointer hover:text-red-600 transition-colors duration-200">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-neutral-900 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -30,24 +36,30 @@
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </div>
+
                         </button>
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('profile.edit')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold">
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('profile.edit')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold">
+                            {{ __('Newsletter') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
+                            <x-dropdown-link :href="route('logout')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
+
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -98,3 +110,4 @@
         </div>
     </div>
 </nav>
+
