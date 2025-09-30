@@ -4,6 +4,8 @@
     }
 </style>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <nav x-data="{ open: false }" class="p-4 fixed w-full z-10 bg-neutral-900 bg-opacity-70 shadow-md">
     <!-- Primary Navigation Menu -->
     <div class="container mx-auto flex justify-between items-center px-4">
@@ -18,51 +20,48 @@
                         <li><a href="/" class="text-white hover:text-red-600 text-lg font-medium">Início</a></li>
                         <li><a href="./news.html" class="text-white hover:text-red-600 text-lg font-medium">Notícias</a></li>
                         <li><a href="./about.html" class="text-white hover:text-red-600 text-lg font-medium">Sobre Nós</a></li>
-                        <li><a href="{{ route('login') }}" class="text-white hover:text-red-600 text-lg font-medium">Entrar</a></li>
+                        @if (Auth::check())
+                            <div>
+                                <x-dropdown align="right" width="48">
+
+                                    <x-slot name="trigger">
+                                        <button class="fa-solid fa-circle-user text-2xl cursor-pointer text-white transition-colors duration-200 hover:text-red-600" id="profileIcon" />
+                                    </x-slot>
+
+                                    <x-slot name="content" class="dropdown-content absolute right-0 mt-2 w-40 bg-neutral-800 rounded-md shadow-lg py-1 hidden">
+
+                                        <x-dropdown-link :href="route('profile.edit')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold">
+                                            {{ __('Profile') }}
+                                        </x-dropdown-link>
+
+                                        <x-dropdown-link :href="route('profile.edit')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold">
+                                            {{ __('Newsletter') }}
+                                        </x-dropdown-link>
+
+                                        <!-- Authentication -->
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+
+                                            <x-dropdown-link :href="route('logout')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold"
+                                                    onclick="event.preventDefault();
+                                                                this.closest('form').submit();">
+                                                {{ __('Log Out') }}
+                                            </x-dropdown-link>
+                                        </form>
+
+                                    </x-slot>
+                                </x-dropdown>
+                            </div>
+                        @else
+                            <li><a href="{{ route('login') }}" class="text-white hover:text-red-600 text-lg font-medium">Entrar</a></li>
+                        @endif
                     </ul>
                 </div>
 
             
 
             <!-- Settings Dropdown -->
-            <div class="fa-solid fa-circle-user text-2xl cursor-pointer hover:text-red-600 transition-colors duration-200">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-neutral-900 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <x-dropdown-link :href="route('profile.edit')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold">
-                            {{ __('Newsletter') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-
-                    </x-slot>
-                </x-dropdown>
-            </div>
+            
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
@@ -78,17 +77,11 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+               <!-- <div class="font-medium text-base text-gray-800"> Você </div> 
+                <div class="font-medium text-sm text-gray-500"> E-Mail</div> -->
             </div>
 
             <div class="mt-3 space-y-1">
