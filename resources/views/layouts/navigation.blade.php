@@ -18,8 +18,8 @@
                 <div class="flex space-x-6 items-center">
                     <ul class="flex space-x-6 items-center">
                         <li><a href="/" class="text-white hover:text-red-600 text-lg font-medium">Início</a></li>
-                        <li><a href="./news.html" class="text-white hover:text-red-600 text-lg font-medium">Notícias</a></li>
-                        <li><a href="./about.html" class="text-white hover:text-red-600 text-lg font-medium">Sobre Nós</a></li>
+                        <li><a href="/noticias" class="text-white hover:text-red-600 text-lg font-medium">Notícias</a></li>
+                        <li><a href="/sobre" class="text-white hover:text-red-600 text-lg font-medium">Sobre Nós</a></li>
                         @if (Auth::check())
                             <div>
                                 <x-dropdown align="right" width="48">
