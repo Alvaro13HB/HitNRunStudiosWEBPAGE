@@ -34,7 +34,7 @@
                                             {{ __('Profile') }}
                                         </x-dropdown-link>
 
-                                        <x-dropdown-link :href="route('profile.edit')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold">
+                                        <x-dropdown-link :href="route('newsletter')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold">
                                             {{ __('Newsletter') }}
                                         </x-dropdown-link>
 

@@ -21,4 +21,8 @@ Route::get('/sobre', function () {
     return view('about');
 })->name("sobre");
 
+Route::get('/newsletter', function () {
+    return view('newsletter');
+})->name("newsletter");
+
 require __DIR__.'/auth.php';
