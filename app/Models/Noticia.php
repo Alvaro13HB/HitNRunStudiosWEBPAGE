@@ -10,7 +10,7 @@ class Noticia extends Model
         'titulo',
         'corpo',
         'likes',
-        'deslikes',
+        'dislikes',
         'autor',
     ];
 }

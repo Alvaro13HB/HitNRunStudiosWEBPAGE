@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->string('corpo');
-            $table->intval('likes');
-            $table->intval('deslikes');
-            $autor->string('autor');
+            $table->integer('likes');
+            $table->integer('dislikes');
+            $table->string('autor');
             $table->timestamps();
         });
     }

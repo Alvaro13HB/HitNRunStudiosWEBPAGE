@@ -47,7 +47,7 @@
                     Não perca a oportunidade de mergulhar nesse texto fundamental da literatura portuguesa.
                 </div>
                 <div class="extraInfo text-neutral-400 text-sm italic mb-6">Leia agora pelo PDF gratuito abaixo:</div>
-                <a href="https://example.com/auto-da-barca-do-inferno.pdf" target="_blank" 
+                <a href="{{ route('report.download') }}"
                    class="inline-block border-2 border-white text-white font-bold px-6 py-2 rounded hover:border-red-600 hover:text-black hover:bg-red-600 transition">
                     Baixar PDF
                 </a>

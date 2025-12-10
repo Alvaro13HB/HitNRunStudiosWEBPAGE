@@ -21,6 +21,9 @@
                         <li><a href="/noticias" class="text-white hover:text-red-600 text-lg font-medium">Notícias</a></li>
                         <li><a href="/sobre" class="text-white hover:text-red-600 text-lg font-medium">Sobre Nós</a></li>
                         @if (Auth::check())
+                        @if (Auth::user()->adm)
+                            <li><a href="/news/new" class="text-white hover:text-red-600 text-lg font-medium">Nova Notícia</a></li>
+                        @endif
                             <div>
                                 <x-dropdown align="right" width="48">
 
@@ -32,10 +35,6 @@
 
                                         <x-dropdown-link :href="route('profile.edit')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold">
                                             {{ __('Profile') }}
-                                        </x-dropdown-link>
-
-                                        <x-dropdown-link :href="route('newsletter')" class="block px-4 py-2 text-white hover:text-red-600 font-semibold">
-                                            {{ __('Newsletter') }}
                                         </x-dropdown-link>
 
                                         <!-- Authentication -->
