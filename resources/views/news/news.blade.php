@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>HitNRunStudios</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -21,58 +21,71 @@
     </head>
 
 <body class="flex flex-col min-h-screen bg-black text-white font-sans">
-
-    @include('layouts.navigation')
-
-  <!-- Modal Login Overlay -->
-  <div id="loginModalContainer"
-    class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-60 backdrop-blur transition-opacity duration-300">
-    <div id="loginModal"
-      class="bg-neutral-900 border border-neutral-700 text-white rounded-lg shadow-xl p-6 w-full max-w-sm text-center scale-95 opacity-0 transition-all duration-300">
-      <h2 class="text-xl font-bold text-red-600 mb-4">Faça login Agora</h2>
-      <p class="mb-6">Entre para poder interagir conosco.</p>
-      <a href="./login.html"
-        class="inline-block mb-4 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded transition-colors duration-200">
-        Ir para Login
-      </a>
-      <p class="mb-6">Não possui uma conta?
-        <a href="./signup.html" class="text-red-500 hover:underline transition duration-200">
-          cadastre-se agora
-        </a>
-      </p>
-    </div>
-  </div>
-
+  @include('layouts.navigation')
   <main class="flex-grow pt-32 pb-20">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if(session()->get("danger"))
+      <div
+        class="container mx-auto px-4 mb-6 p-4 bg-red-600 text-white rounded-lg shadow-md text-center max-w-4xl">
+        {{ session()->get("danger") }}
+      </div>
+    @elseif(session()->get("success"))
+      <div
+        class="container mx-auto px-4 mb-6 p-4 bg-green-600 text-white rounded-lg shadow-md text-center max-w-4xl">
+        {{ session()->get("success") }}
+      </div>
+    @endif
+    @foreach($dados as $item)
     <div class="container mx-auto px-4 space-y-8">
-
       <div
         class="card bg-neutral-900 rounded-lg p-6 w-full max-w-4xl mx-auto flex flex-row items-stretch h-72 border border-neutral-800">
         <div class="contentContainer w-[95%] text-white pr-4 overflow-y-auto">
-          <div class="newsTitle text-3xl font-bold mb-3 text-true-red">Placeholder Headline 1</div>
+          <div class="newsTitle text-3xl font-bold mb-3 text-true-red">{{ $item->titulo }}</div>
           <div class="newsBody text-neutral-300 leading-relaxed mb-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet justo nec tortor
-            fermentum, et
-            ultricies ligula blandit. More updates coming soon.
+            {{ $item->corpo }}
           </div>
-          <div class="extraInfo text-neutral-400 text-sm italic">Posted on July 9, 2025 by Staff</div>
+          <div class="extraInfo text-neutral-400 text-sm italic">Posted on {{ $item->created_at }} by {{ $item->autor }}</div>
         </div>
         <div
           class="feedbackButtonsContainer w-[5%] flex flex-col justify-center items-center space-y-12 h-full font-semibold">
+          @if(Auth::check() && Auth::user()->adm && $item->autor == Auth::user()->name)
+
           <div class="text-neutral-500 flex flex-col items-center">
-            <button id="3" class="hover:text-white toggle-btn">
-              <i class="fas fa-heart text-xl transition duration-200"></i>
-            </button>
-            <p>18</p>
+            <a href="/news/edit/{{ $item->id }}" id="3" class="hover:text-white">
+              <i class="fas fa-pen text-xl transition duration-200"></i>
+            </a>
           </div>
           <div class="text-neutral-500 flex flex-col items-center">
-            <button id="4" class="hover:text-white toggle-btn">
-              <i class="fas fa-heart-broken text-xl transition duration-200"></i>
-            </button>
-            <p>2</p>
+            <a href="/news/delete/{{ $item->id }}" id="4" class="hover:text-white">
+              <i class="fas fa-trash text-xl transition duration-200"></i>
+            </a>
           </div>
+
+          @else
+
+          @php
+              $likeClass = ($item->user_vote == 1) ? 'text-white' : '';
+              $dislikeClass = ($item->user_vote == -1) ? 'text-white' : '';
+          @endphp
+
+          <div class="text-neutral-500 flex flex-col items-center">
+              <button class="hover:text-white toggle-btn like-btn {{ $likeClass }}" data-id="{{ $item->id }}">
+                  <i class="fas fa-heart text-xl transition duration-200"></i>
+              </button>              
+              <p id="likes-count-{{ $item->id }}">{{ $item->likes }}</p>
+          </div>
+
+          <div class="text-neutral-500 flex flex-col items-center">
+              <button class="hover:text-white toggle-btn dislike-btn {{ $dislikeClass }}" data-id="{{ $item->id }}">
+                  <i class="fas fa-heart-broken text-xl transition duration-200"></i>
+              </button>
+              <p id="dislikes-count-{{ $item->id }}">{{ $item->dislikes }}</p>
+          </div>
+
+          @endif
         </div>
       </div>
+      @endforeach
     </main>
 
     <footer class="text-center text-white bg-neutral-900 border-t border-neutral-700">
@@ -84,6 +97,81 @@
             </div>
         </div>
     </footer>
-    
+
+    <script>
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+      const loginUrl = '/login';
+
+      function handleVote(button, type, noticiaId) {
+          const url = `/news/${noticiaId}/vote`; 
+          
+          button.disabled = true;
+
+          fetch(url, {
+              method: 'POST',
+              headers: {
+                  'X-CSRF-TOKEN': csrfToken, 
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ type: type })
+          })
+          .then(response => {
+              if(response.status === 401) {
+                  window.location.href = loginUrl;
+                  return;
+              }
+              if (!response.ok) {
+                  throw new Error('Falha na requisição: ' + response.statusText);
+              }
+              return response.json();
+          })
+          .then(data => {
+              const likeCountElement = document.getElementById(`likes-count-${noticiaId}`);
+              const dislikeCountElement = document.getElementById(`dislikes-count-${noticiaId}`);
+              
+              if (likeCountElement) {
+                  likeCountElement.textContent = data.likes;
+              }
+              if (dislikeCountElement) {
+                  dislikeCountElement.textContent = data.dislikes;
+              }
+
+              const likeButton = document.querySelector(`.like-btn[data-id="${noticiaId}"]`);
+              const dislikeButton = document.querySelector(`.dislike-btn[data-id="${noticiaId}"]`);
+              if (likeButton) {
+                  likeButton.classList.remove('text-white');
+              }
+              if (dislikeButton) {
+                  dislikeButton.classList.remove('text-white');
+              }
+              if (data.voted === 1 && likeButton) {
+                  likeButton.classList.add('text-white');
+              } else if (data.voted === -1 && dislikeButton) {
+                  dislikeButton.classList.add('text-white');
+              }
+          })
+          .catch(error => {
+              console.error('Erro ao registrar voto:', error);
+              //alert('Não foi possível registrar seu voto. Verifique o console.');
+          })
+          .finally(() => {
+              button.disabled = false;
+          });
+      }
+
+      document.body.addEventListener('click', function(event) {
+          const likeTarget = event.target.closest('.like-btn');
+          const dislikeTarget = event.target.closest('.dislike-btn');
+          
+          if (likeTarget) {
+              event.preventDefault(); 
+              handleVote(likeTarget, 1, likeTarget.dataset.id); 
+          } else if (dislikeTarget) {
+              event.preventDefault(); 
+              handleVote(dislikeTarget, -1, dislikeTarget.dataset.id); 
+          }
+      });
+    </script>
 </body>
 </html>
+

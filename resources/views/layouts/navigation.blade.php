@@ -10,7 +10,7 @@
     <!-- Primary Navigation Menu -->
     <div class="container mx-auto flex justify-between items-center px-4">
                 <!-- Logo -->
-                <a href="/" class="text-3xl font-bold tracking-wider">
+                <a href="/" class="text-3xl text-white font-bold tracking-wider">
                     HIT<span class="text-true-red">N</span>RUN
                 </a>
 
@@ -18,8 +18,9 @@
                 <div class="flex space-x-6 items-center">
                     <ul class="flex space-x-6 items-center">
                         <li><a href="/" class="text-white hover:text-red-600 text-lg font-medium">Início</a></li>
-                        <li><a href="/noticias" class="text-white hover:text-red-600 text-lg font-medium">Notícias</a></li>
-                        <li><a href="/sobre" class="text-white hover:text-red-600 text-lg font-medium">Sobre Nós</a></li>
+                        <li><a href="/news" class="text-white hover:text-red-600 text-lg font-medium">Notícias</a></li>
+                        <li><a href="/about" class="text-white hover:text-red-600 text-lg font-medium">Sobre Nós</a></li>
+                        <li><a href="/guerrena" class="text-white hover:text-red-600 text-lg font-medium">Guerrena</a></li>
                         @if (Auth::check())
                         @if (Auth::user()->adm)
                             <li><a href="/news/new" class="text-white hover:text-red-600 text-lg font-medium">Nova Notícia</a></li>

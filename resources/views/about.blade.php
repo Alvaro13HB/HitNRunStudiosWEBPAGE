@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>HitNRunStudios</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -39,7 +39,7 @@
                         Um pequeno estúdio de jogos formado por <strong>5 estudantes do CEFET</strong>. Iniciamos nossa
                         jornada em
                         <strong>2023</strong> com um projeto acadêmico baseado no livro
-                        <em>"O Auto da Barca do Inferno"</em>. A partir dele, nasceu <strong>Guerrena</strong>, um jogo
+                        <em>"Auto da Barca do Inferno"</em>. A partir dele, nasceu <strong>Guerrena</strong>, um jogo
                         que se passa
                         no universo da obra, reimaginando seus personagens e dilemas em uma experiência interativa e
                         desafiadora.

@@ -5,20 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-class PdfController extends Controller
+class GameController extends Controller
 {
-    public function downloadExistingPdf()
+    public function downloadGame()
     {
-        $filePath = 'autodabarcadoinferno.pdf';
+        $filePath = 'Guerrena.exe';
         $disk = "public";
 
         if (!Storage::disk($disk)->exists($filePath)) {
-            abort(404, 'The requested PDF file was not found.');
+            abort(404, 'The requested file was not found.');
         }
 
         $absolutePath = Storage::disk($disk)->path($filePath);
 
-        $fileName = 'Auto da Barca do Inferno - Gil Vicente.pdf';
+        $fileName = 'Guerrena.exe';
 
         return response()->download($absolutePath, $fileName);
     }

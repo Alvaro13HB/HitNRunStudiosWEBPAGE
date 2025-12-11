@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('noticias', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->string('corpo');
+            $table->string('corpo', 1250);
             $table->integer('likes');
             $table->integer('dislikes');
             $table->string('autor');

@@ -1,9 +1,10 @@
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
+<html lang="pt-BR">
+
+<head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-       <title>HitNRunStudios</title>
+        <title>HitNRunStudios</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -18,44 +19,31 @@
             </style>
         @endif
     </head>
-    <body class="flex flex-col min-h-screen bg-black text-white font-sans">
+
+<body class="flex flex-col min-h-screen bg-black text-white font-sans">
 
     @include('layouts.navigation')
 
-    <!-- Main content area -->
-    <main class="flex-grow pt-32">
-        <!-- Hero section - increased height -->
-        <section class="relative h-[70vh] flex items-start">
-            <div class="absolute left-0 ml-8">
-                <img src="{{asset('/storage/logo.png')}}" alt="Hit & Run Studios Logo" class="w-auto h-auto max-h-[60vh]" />
-            </div>
-            <div class="absolute inset-0 flex flex-col items-center justify-center space-y-4">
-                <h1 class="text-white text-4xl font-bold text-center px-4">Fazemos jogos e música, às vezes</h1>
-                <a href="/news"
-                    class="border-2 border-white text-white font-bold px-6 py-2 rounded hover:border-red-600 hover:text-black hover:bg-red-600 transition">
-                    Ir para as notícias
-                </a>
-            </div>
-        </section>
+    <!-- Main Content -->
+    <main class="flex-grow pt-24">
+        <section class="flex flex-col items-center justify-center px-4 text-center">
 
-        <!-- Content section - no gap to footer -->
-        <section class="w-full bg-neutral-900 py-12">
-            <div class="container mx-auto px-4 max-w-4xl">
-                <div class="newsTitle text-3xl font-bold mb-6 text-true-red">Leitura Recomendada: Auto da Barca do Inferno</div>
-                <div class="newsBody text-neutral-300 leading-relaxed mb-6">
-                    Descubra a riqueza do clássico teatral de Gil Vicente, <em>Auto da Barca do Inferno</em>: uma obra cheia de críticas sociais e humor que continua atual e envolvente.
-                    Não perca a oportunidade de mergulhar nesse texto fundamental da literatura portuguesa.
+            <!-- Texto e logo lado a lado -->
+            <div class="flex flex-col lg:flex-row items-center justify-center w-full max-w-6xl gap-6">
+                <div class="mt-4">
+                    <img src="{{asset('/storage/title.png')}}" alt="Título do Jogo" width="840"/>
                 </div>
-                <div class="extraInfo text-neutral-400 text-sm italic mb-6">Leia agora pelo PDF gratuito abaixo:</div>
-                <a href="{{ route('report.download') }}"
-                   class="inline-block border-2 border-white text-white font-bold px-6 py-2 rounded hover:border-red-600 hover:text-black hover:bg-red-600 transition">
-                    Baixar PDF
-                </a>
             </div>
+            <a href="{{ route('game.download') }}"
+                class="m-10 inline-block border-2 border-white text-white font-bold px-6 py-2 rounded hover:border-red-600 hover:text-black hover:bg-red-600 transition">
+                Baixar Guerrena
+            </a>
+
         </section>
     </main>
 
-    <!-- Footer - no gap -->
+
+    <!-- Footer -->
     <footer class="text-center text-white bg-neutral-900 border-t border-neutral-700">
         <div class="container mx-auto px-4 py-10">
             <p>&copy; 2025 Hit&RunStudios. All rights reserved.</p>
@@ -65,5 +53,6 @@
             </div>
         </div>
     </footer>
+
 </body>
 </html>
